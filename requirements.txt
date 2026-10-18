@@ -1,0 +1,37 @@
+bleak>=0.22
+cryptography>=42
+noiseprotocol>=0.3
+pytest>=8
+pytest-asyncio>=0.24  # headless tests for tui.py's textual App (run_test())
+textual>=8            # tui.py: full-screen terminal UI (header/status bar,
+                       # switcher menu) over the same MeshEngine as cli.py --
+                       # cli.py itself has no new dependency and still works
+                       # standalone with just the packages above it.
+flet>=0.86             # gui.py: real desktop GUI (asyncio-native, so it
+                       # integrates with MeshEngine the same clean way tui.py
+                       # does) + `flet pack` for a standalone .exe.
+sounddevice>=0.5  # voice notes: mic capture (bitchat/voice.py). Also needs
+                  # ffmpeg on PATH at runtime (AAC encoding) -- not pip-installable.
+
+# Nostr internet fallback (bitchat/nostr_*.py). coincurve>=20 fails to build
+# on this machine (Python 3.14, no wheel yet -- its sdist's build hook hits
+# a "no LICENSE file in cffi distribution" bug); 19.0.1 has a prebuilt wheel
+# and works fine. Pin here rather than let pip pick latest-and-broken.
+coincurve==19.0.1
+pynacl>=1.5      # NIP-44 v2's XChaCha20-Poly1305 -- stdlib `cryptography` has
+                 # ChaCha20-Poly1305 but not the extended-nonce XChaCha20 variant.
+bech32>=1.2
+websockets>=14
+python-socks[asyncio]>=2  # Tor: routes relay WebSocket connections through an
+                          # external SOCKS5 proxy (see bitchat/nostr_relay.py).
+                          # Requires a real Tor process already running
+                          # (e.g. Tor Browser, or the standalone Tor Expert
+                          # Bundle) -- we don't embed/manage Tor ourselves;
+                          # see README for why.
+
+# Phase 2 only (peripheral / GATT server role) - Windows-only WinRT projections
+winrt-runtime; sys_platform == "win32"
+winrt-Windows.Devices.Bluetooth; sys_platform == "win32"
+winrt-Windows.Devices.Bluetooth.GenericAttributeProfile; sys_platform == "win32"
+winrt-Windows.Devices.Bluetooth.Advertisement; sys_platform == "win32"
+winrt-Windows.Storage.Streams; sys_platform == "win32"

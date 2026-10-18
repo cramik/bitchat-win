@@ -1,0 +1,28 @@
+# Virtual environment
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# PyInstaller / packaging
+build/
+dist/
+
+# Private identity and local state (contains private keys)
+identity.json
+nostr_identity.json
+nostr_device_seed.json
+favorites.json
+groups.json
+
+# Received files/voice notes (local, not part of the project)
+received_files/
+
+# Test artifacts
+.pytest_cache/
+
+# OS/editor
+.DS_Store
+*.swp
